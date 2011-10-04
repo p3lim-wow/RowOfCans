@@ -1,0 +1,10 @@
+## Interface: 40200
+## Author: p3lim
+## Version: Alpha
+## Title: Row of Cans
+## Notes: Kanro you're lazy!
+
+LibBagUtils-1.0\LibStub.lua
+LibBagUtils-1.0\LibBagUtils-1.0\LibBagUtils-1.0.lua
+
+RowOfCans.lua
