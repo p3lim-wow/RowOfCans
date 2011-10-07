@@ -1,18 +1,17 @@
-
 local cauldronLoc = {}
 local cauldron = {
-	[58085] = 1, -- Flask of Steelskin
-	[58086] = 1, -- Flask of Draconic Mind
-	[58087] = 1, -- Flask of the Winds
-	[58088] = 1, -- Flask of Titanic Strength
-	[58142] = 8, -- Deathblood Venom
+	['58085'] = 1, -- Flask of Steelskin
+	['58086'] = 1, -- Flask of Draconic Mind
+	['58087'] = 1, -- Flask of the Winds
+	['58088'] = 1, -- Flask of Titanic Strength
+	['58142'] = 8, -- Deathblood Venom
 }
 
 local feastLoc = {}
 local feast = {
-	[53064] = 2, -- Highland Guppy
-	[53068] = 2, -- Lavascale Catfish
-	[53070] = 2, -- Fathom Eel
+	['53064'] = 2, -- Highland Guppy
+	['53068'] = 2, -- Lavascale Catfish
+	['53070'] = 2, -- Fathom Eel
 }
 
 local function WithdrawCauldron(self)
@@ -26,12 +25,10 @@ local function WithdrawCauldron(self)
 
 	if(missing) then return end
 
-	self:Disable()
 	for item, info in pairs(cauldronLoc) do
 		SplitGuildBankItem(info.tab, info.slot, cauldron[item])
-		LibStub('LibBagUtils-1.0'):PutItem('BAGS', false, cauldron[item])
+		LibStub('LibBagUtils-1.0'):PutItem('BAGS')
 	end
-	self:Enable()
 end
 
 local function WithdrawFeast(self)
@@ -45,12 +42,10 @@ local function WithdrawFeast(self)
 
 	if(missing) then return end
 
-	self:Disable()
 	for item, info in pairs(feastLoc) do
 		SplitGuildBankItem(info.tab, info.slot, feast[item])
 		LibStub('LibBagUtils-1.0'):PutItem('BAGS')
 	end
-	self:Enable()
 end
 
 local function Check()
@@ -62,7 +57,6 @@ local function Check()
 			local link = GetGuildBankItemLink(tab, slot)
 			if(link) then
 				local _, id = string.match(link, '(%w+):(%d+)')
-				id = tonumber(id)
 
 				if(cauldron[id]) then
 					cauldronLoc[id] = {
@@ -98,7 +92,6 @@ addon:SetScript('OnEvent', function(self, event, name)
 	Feast:SetScript('OnClick', WithdrawFeast)
 	Feast:SetPoint('LEFT', Cauldron, 'RIGHT', 3, 0)
 	Feast:SetText('Feast')
-
 
 	self:RegisterEvent('GUILDBANKBAGSLOTS_CHANGED')
 	self:SetScript('OnEvent', Check)
